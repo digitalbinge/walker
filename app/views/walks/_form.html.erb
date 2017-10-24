@@ -11,9 +11,45 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label(:client_id, "Client:") %>
-    <%= form.select :client_id, options_for_select(@client_options), {prompt: "Choose client"} %> 
+
+  <script type="text/javascript">
+    jQuery(function() {
+      $('#dogs_drop').hide();
+      var dogs;
+      dogs = $('#dogs_drop select').html();
+      console.log(dogs);
+      return $('#client_drop select').change(function() {
+        if ($('#client_drop select').val()==""){
+          $('#dogs_drop').hide();
+        } else {
+          $('#dogs_drop').show();
+          var client, options;
+          client = $('#client_drop :selected').text();
+          options = $(dogs).filter("optgroup[label=" + client + "]").html();
+          console.log(options);
+          if (options) {
+            return $('#dogs_drop select').html(options);
+          } else {
+            return $('#dogs_drop select').empty();
+          }
+        }
+      });
+    });
+  </script>
+
+  <div class="dropdown">
+    
+    <div class="field" id="client_drop">
+      <%= form.label(:client_id, "Client:") %>
+      <%= form.collection_select(:client_id, Client.all, :id, :name, {prompt: "Choose client"}) %>
+    </div>
+
+
+    <div class="field" id="dogs_drop">
+      <%= form.label(:client_id, "Dog:") %>
+      <%= form.grouped_collection_select(:walk, Client.all, :dogs, :name, :id, :name) %>
+    </div>
+
   </div>
 
   <div class="field">

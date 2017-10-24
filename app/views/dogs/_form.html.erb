@@ -1,0 +1,32 @@
+<%= form_with(model: dog, local: true) do |form| %>
+  <% if dog.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(dog.errors.count, "error") %> prohibited this dog from being saved:</h2>
+
+      <ul>
+      <% dog.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label(:client_id, "Client:") %>
+    <%= form.select :client_id, options_for_select(@client_options), {prompt: "Choose client"} %> 
+  </div>
+
+  <div class="field">
+    <%= form.label :name, "Name:" %>
+    <%= form.text_field :name, id: :dog_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dob, "DOB:" %>
+    <%= form.date_select :dob, {order: [:day, :month, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year, end_year: Date.today.year - 100}, {required: true} %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
