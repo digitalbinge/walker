@@ -15,5 +15,10 @@
   <%= @walk.distance %>
 </p>
 
+<p>
+  <strong>Price:</strong>
+  $<%= @walk.distance * 3.5 %>
+</p>
+
 <%= link_to 'Edit', edit_walk_path(@walk) %> |
 <%= link_to 'Back', walks_path %>
